@@ -1,0 +1,57 @@
+'ProgramMode:RUN'
+'Dessin de fin de jeu'
+
+'Dessin de la capsule de sauvetage'
+0->O
+0->P
+{4447,48,4247,4850,50,4346,51,52,4548,4450,5055,4754,5059->List 1
+{2023,2528,1621,2227,3034,1619,3033,2932,17,16,2927,1815,2824->List 2
+Prog "LINE"
+{5557,5860,59,5759,5659,60,61,62,4745,4442,4036,3539,4037,3845,5153->List 1
+{1416,1722,1618,15,14,1520,1521,1519,2628,2729,30,3026,2522,22,1820->List 2
+Prog "LINE"
+{4846,45,4440,4037,38,3835,3430,2924,2325,2733,3429,2825,2934,3532,3337->List 1
+{2934,3230,3034,3538,3634,33,34,35,3533,3226,25,24,23,2219,19->List 2
+Prog "LINE"
+F-Line 38,20,43,20
+{26,41,46,47,46,49,53,53,54,54,56,60,58,63,63,53,53,55,55,57,57,53,54,54->List 1
+{33,29,28,24,18,28,29,0,28,29,26,23,16,16,15,23,24,22,23,21,22,17,18,19->List 2
+DrawStat
+
+'Dessin des étoiles à branche'
+12->O
+9->P
+Prog "STAR"
+4->O
+29->P
+Prog "STAR"
+52->O
+32->P
+Prog "STAR"
+65->O
+24->P
+Prog "STAR"
+60->O
+1->P
+142313->W
+3->D
+Prog "DRAWSTR"
+
+'Dessin des étoiles en points'
+{4,8,4,28,26,31,74,71,67,75->List 1
+{16,22,44,11,43,40,13,18,43,39->List 2
+S-Gph1 DrawOn,Scatter,List 1,List 2,1,Square
+DrawStat
+
+'Réinitialisation du mode d'affichage des points'
+S-Gph1 DrawOn,Scatter,List 1,List 2,1,Dot
+PlotOff 1,1Disps
+
+'Réinitialisation de variables'
+0->O
+0->P
+0->F
+0->L
+100->V
+0->Q
+0->List 5[11

@@ -1,0 +1,31 @@
+'ProgramMode:RUN'
+
+'Dessin de la map'
+Prog "CLEAR"
+0->O
+0->P
+{40,40,40,3743,3743,3644,3842,3842,3842,3743,3842,3644,3644,3743->List 1
+{1117,2332,4445,1313,18,22,25,28,31,33,38,40,43,16->List 2
+Prog "LINE"
+{3734,34,3732,32,35,37,3634,3431,3131,36,38,38,35,33->List 1
+{14,1516,20,1918,2123,2531,27,29,30,2927,3336,3638,4142,4043,4240->List 2
+Prog "SYM"
+{40,37,43,37,43,34,46,34,46,38,42,34,46,37,43->List 1
+{39,15,15,19,19,26,26,31,31,37,37,42,42,36,36->List 2
+DrawStat
+
+'Affichage de la position du joueur'
+List 5[1->Q
+Int (List 3[Q](10)-8)->X
+Int (List 3[Q](10)-6)-X(10)2->Y
+{X->List 1
+{Y->List 2
+S-Gph1 DrawOn,Scatter,List 1,List 2,1,Square
+DrawStat
+
+'Réinitialisation du mode d'affichage des points'
+S-Gph1 DrawOn,Scatter,List 1,List 2,1,Dot
+
+'Affichage de l'orientation du joueur'
+List 5[2->R
+Prog "ORIENT"

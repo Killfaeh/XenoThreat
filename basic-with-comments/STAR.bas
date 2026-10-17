@@ -1,0 +1,6 @@
+'ProgramMode:RUN'
+'Dessin d'une étoile à branches'
+{104,811,606,606,305,709,907,503->List 1
+{808,808,106,1015,911,1109,705,507->List 2
+Prog "LINE"
+PlotOn O+6,P+8
