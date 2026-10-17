@@ -1,4 +1,4 @@
 # XenoThreat
-Game for CASIO Graph 25
+Game for CASIO Graph 25 calculators
 
 [WIP]
