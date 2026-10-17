@@ -1,0 +1,11 @@
+'ProgramMode:RUN
+ClrText
+"COMMANDS"
+"8:GO AHEAD"
+"7:TURN LEFT"
+"9:TURN RIGHT"DispsClrText
+"5:VIEW MAP"
+"2:VIEW STATS"
+"1:LOAD GAME"
+"3:SAVE GAME"DispsClrText
+"6:VIEW CMDS"Disps3->V
