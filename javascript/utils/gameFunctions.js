@@ -213,6 +213,7 @@ function displayTile(state)
 	// Checker si un alien est là ou non...
 	if (tileData.item > 4)
 	{
+		sounds.play('alien');
 		state.graphics.alien = 1.0;
 		state.graphics.exe = 1.0;
 		state.game.alienHP = tileData.item-4;
@@ -220,6 +221,8 @@ function displayTile(state)
 	}
 	else
 	{
+		state.game.soundToPlay = 'key-stroke';
+		
 		// Afficher la case
 		state.graphics = displayBackground(state.game);
 		
@@ -234,6 +237,7 @@ function displayTile(state)
 			{
 				state.game.player.keys++;
 				emptyTile(state.game.player, tileData);
+				state.game.soundToPlay = 'key';
 			}
 				
 			// 2 : Un lot de 10 munitions
@@ -245,6 +249,8 @@ function displayTile(state)
 					state.game.player.bullets = 99;
 				
 				emptyTile(state.game.player, tileData);
+				
+				state.game.soundToPlay = 'bullets';
 			}
 			
 			// 3 : Une trousse de secours rapportant maximum 30 points de vie
@@ -256,6 +262,8 @@ function displayTile(state)
 					state.game.player.hp = 99;
 				
 				emptyTile(state.game.player, tileData);
+				
+				state.game.soundToPlay = 'health';
 			}
 			
 			state.game.prgmCursor = 'displaySettingOnly';
@@ -285,8 +293,16 @@ function attackAlien(gameState, damageScale)
 			nextStep = 'alienDead';
 		}
 		
+		if (damageScale > 5)
+			sounds.play('gun');
+		else
+			sounds.play('punch');
+		
 		return displayMessageScreen(gameState, "YOUR ATTACK\nSUCCEDED\nHITS : " + damage, nextStep);
 	}
 	else
+	{
+		sounds.play('miss');
 		return displayMessageScreen(gameState, 'YOUR ATTACK\nFAILED', 'alienAction');
+	}
 }

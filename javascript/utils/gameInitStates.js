@@ -11,6 +11,7 @@ var INITIAL_GAME_STATE =
 {
 	started: false,
 	prgmCursor: 'displayStartMenu',
+	soundToPlay: '',
 	textAnimation: false,
 	waitInput: false,
 	input: -1,

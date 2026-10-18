@@ -119,6 +119,7 @@ function execGameLoop(gameState)
 	
 	if (subPrgm[oldGameState.prgmCursor])
 	{
+		sounds.play(oldGameState.soundToPlay);
 		var newState = subPrgm[oldGameState.prgmCursor](oldGameState);
 		newState.game.input = -1;
 		return newState;

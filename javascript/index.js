@@ -88,6 +88,7 @@ var handleInput = function($input)
 {
 	if (state.game.started && !state.game.textAnimation && state.game.waitInput)
 	{
+		sounds.play('key-stroke');
 		state = JSON.parse(JSON.stringify(state));
 		state.game.input = $input;
 		updateFromState();

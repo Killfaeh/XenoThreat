@@ -6,36 +6,90 @@
 
 function displayStartScreen()
 {
+	sounds.stopAll();
+	sounds.loadAll();
 	var newState = initNewState(INITIAL_GAME_STATE);
 	newState.game.started = true;
 	newState.graphics.logo = 1.0;
 	return newState;
 }
 
-function displayStartMenu(gameState) { return displayMessageScreen(gameState, 'MAIN MENU\n0:NEW GAME\n1:LOAD GAME\nWHAT TO DO@', 'selectStartMenu'); }
+function displayStartMenu(gameState)
+{
+	sounds.play('open-menu');
+	return displayMessageScreen(gameState, 'MAIN MENU\n0:NEW GAME\n1:LOAD GAME\nWHAT TO DO@', 'selectStartMenu');
+}
 
 function selectStartMenu(gameState)
 {
 	var newState = initNewState(gameState);
 	
 	if (newState.game.input === 0)
+	{
+		sounds.play('key-stroke');
 		return displayMessageScreen(gameState, 'COMMANDS\n8:GO AHEAD\n7:TURN LEFT\n9:TURN RIGHT', 'displayNewGame1');
+	}
 	else if (newState.game.input === 1)
+	{
+		sounds.play('open-menu');
 		return displayMessageScreen(gameState, displaySaveStates(), 'displayLoadPrompt');
+	}
 	else
 		return displayStartMenu(gameState);
 	
 	return newState;
 }
 
-function displayNewGame1(gameState) { return displayMessageScreen(gameState, '5:VIEW MAP\n2:VIEW STATS\n1:LOAD GAME\n3:SAVE GAME', 'displayNewGame2'); }
-function displayNewGame2(gameState) { return displayMessageScreen(gameState, '6:VIEW CMDS', 'displayNewGame3'); }
-function displayNewGame3(gameState) { return displayMessageScreen(gameState, '...', 'displayNewGame4'); }
-function displayNewGame4(gameState) { return displayMessageScreen(gameState, 'RED ALERT\nRED ALERT', 'displayNewGame5'); }
-function displayNewGame5(gameState) { return displayMessageScreen(gameState, 'HOSTILE\nALIENS HAVE\nINVADED\nTHE DEDALUS', 'displayNewGame6'); }
-function displayNewGame6(gameState) { return displayMessageScreen(gameState, 'YOU MUST\nEVACUATE\nTHE SHIP', 'displayNewGame7'); }
-function displayNewGame7(gameState) { return displayMessageScreen(gameState, 'REPEAT', 'displayNewGame8'); }
-function displayNewGame8(gameState) { return displayMessageScreen(gameState, 'YOU MUST\nEVACUATE\nTHE SHIP', 'startGame'); }
+function displayNewGame1(gameState)
+{
+	sounds.play('key-stroke');
+	return displayMessageScreen(gameState, '5:VIEW MAP\n2:VIEW STATS\n1:LOAD GAME\n3:SAVE GAME', 'displayNewGame2');
+}
+
+function displayNewGame2(gameState)
+{
+	sounds.play('key-stroke');
+	return displayMessageScreen(gameState, '6:VIEW CMDS', 'displayNewGame3');
+}
+
+function displayNewGame3(gameState)
+{
+	sounds.stop('space-mood');
+	sounds.play('key-stroke');
+	return displayMessageScreen(gameState, '...', 'displayNewGame4');
+}
+
+function displayNewGame4(gameState)
+{
+	sounds.play('red_alert');
+	sounds.play('ship-mood-2');
+	return displayMessageScreen(gameState, 'RED ALERT\nRED ALERT', 'displayNewGame5');
+}
+
+function displayNewGame5(gameState)
+{
+	sounds.play('key-stroke');
+	return displayMessageScreen(gameState, 'HOSTILE\nALIENS HAVE\nINVADED\nTHE DEDALUS', 'displayNewGame6');
+}
+
+function displayNewGame6(gameState)
+{
+	sounds.play('key-stroke');
+	return displayMessageScreen(gameState, 'YOU MUST\nEVACUATE\nTHE SHIP', 'displayNewGame7');
+}
+
+function displayNewGame7(gameState)
+{
+	sounds.play('key-stroke');
+	return displayMessageScreen(gameState, 'REPEAT', 'displayNewGame8');
+}
+
+function displayNewGame8(gameState)
+{
+	sounds.play('key-stroke');
+	return displayMessageScreen(gameState, 'YOU MUST\nEVACUATE\nTHE SHIP', 'startGame');
+}
+
 function displayLoadPrompt(gameState) { return displayMessageScreen(gameState, 'CHOOSE SLOT\nTO LOAD@', 'startGame'); }
 function displaySavePrompt(gameState) { return displayMessageScreen(gameState, 'CHOOSE SLOT\nTO SAVE@', 'execSave'); }
 
@@ -45,7 +99,7 @@ function execSave(gameState)
 	
 	if (newState.game.input > 0 && newState.game.input < 9)
 	{
-		// Charger la partie
+		sounds.play('save');
 		var saved = localStorage.getItem('xeno-threat');
 		var savedState = saved ? JSON.parse(saved) : { '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null };
 		savedState[newState.game.input] = newState.game.player;
@@ -60,6 +114,10 @@ function execSave(gameState)
 
 function startGame(gameState)
 {
+	sounds.stop('space-mood');
+	sounds.play('load');
+	sounds.play('ship-mood-2');
+	
 	var newState = initNewState(gameState);
 	
 	newState.game.player = JSON.parse(JSON.stringify(INITIAL_GAME_STATE.player));
@@ -83,6 +141,7 @@ function startGame(gameState)
 
 function displayCurrentTile(gameState)
 {
+	sounds.play('key-stroke');
 	var newState = initNewState(gameState);
 	newState = displayTile(newState);
 	return newState;
@@ -92,11 +151,16 @@ function displaySettingOnly(gameState)
 {
 	var newState = initNewState(gameState);
 	newState.game.prgmCursor = 'displayActionPrompt';
+	newState.game.soundToPlay = 'key-stroke';
 	newState.graphics = displayBackground(newState.game);
 	return newState;
 }
 
-function displayActionPrompt(gameState) { return displayMessageScreen(gameState, 'WHAT TO DO@', 'execAction'); }
+function displayActionPrompt(gameState)
+{
+	sounds.play('key-stroke');
+	return displayMessageScreen(gameState, 'WHAT TO DO@', 'execAction');
+}
 
 // Sous programme d'exécution des commandes du joueur
 function execAction(gameState)
@@ -133,7 +197,12 @@ function execAction(gameState)
 			
 			// Sortir
 			if (tileData.item === 4 && newState.game.player.orientation === 1)
+			{
+				sounds.stop('ship-mood-2');
+				sounds.play('door');
+				sounds.play('space-mood');
 				return displayMessageScreen(newState.game, 'YOU ESCAPED\nFROM THE\nDEDALUS', 'escapeFromStarship1');
+			}
 			
 			// Récupération de l'id de la tuile suivante en fonction de l'orientation
 			var nextId = tileData.top;
@@ -167,6 +236,7 @@ function execAction(gameState)
 						// Si nécessaire on passe à la section suivante
 						if (nextId > newState.game.player.tileId)
 						{
+							sounds.play('door');
 							newState.game.player.sectionId--;
 							newState.game.player.currentStage = initMap(newState.game.player);
 						}
@@ -177,6 +247,7 @@ function execAction(gameState)
 					{
 						if (nextId < newState.game.player.tileId)
 						{
+							sounds.play('door');
 							newState.game.player.sectionId++;
 							newState.game.player.currentStage = initMap(newState.game.player);
 						}
@@ -189,12 +260,14 @@ function execAction(gameState)
 			}
 		}
 
+		sounds.play('key-stroke');
 		newState = displayTile(newState);
 	}
 	
 	// Affichage de la map
 	else if (newState.game.input === 5)
 	{
+		sounds.play('open-menu');
 		var tileData = getTileData(newState.game.player);
 		newState.graphics.map = 1.0;
 		newState.graphics.position = 1.0;
@@ -207,23 +280,38 @@ function execAction(gameState)
 	
 	// Affichage des statistiques du joueur
 	else if (newState.game.input === 2)
+	{
+		sounds.play('open-menu');
 		newState = displayMessageScreen(newState.game, `STATS\nHEALTH: ${newState.game.player.hp}`, 'displayPlayerStat2');
+	}
 	
 	// Affichage de l'écran de chargement d'une partie
 	else if (newState.game.input === 1)
+	{
+		sounds.play('open-menu');
 		newState = displayMessageScreen(newState.game, displaySaveStates(), 'displayLoadPrompt');
+	}
 	
 	// Affichage de l'écran de sauvegarde de la partie
 	else if (newState.game.input === 3)
+	{
+		sounds.play('open-menu');
 		newState = displayMessageScreen(newState.game, displaySaveStates(), 'displaySavePrompt');
+	}
 	
 	// Afficher les commandes du jeu
 	else if (newState.game.input === 6)
+	{
+		sounds.play('open-menu');
 		return displayMessageScreen(gameState, 'COMMANDS\n8:GO AHEAD\n7:TURN LEFT\n9:TURN RIGHT', 'displayHelp');
+	}
 	
 	// Affichage du décor de la case actuelle
 	else
+	{
+		sounds.play('key-stroke');
 		newState.graphics = displayBackground(newState.game);
+	}
 	
 	return newState;
 }
@@ -239,6 +327,8 @@ function startFight(gameState) { return displayMessageScreen(gameState, 'EVIL AL
 
 function displayFightMenu(gameState)
 {
+	sounds.play('open-menu');
+	
 	var message = '1:HAND ATK\n';
 	
 	if (gameState.player.bullets > 0)
@@ -266,6 +356,8 @@ function execFightAction(gameState)
 		else if (newState.game.input === 3)
 		{
 			var randNum = Math.random();
+			
+			sounds.play('escape');
 			
 			if (randNum > 0.5)
 			{
@@ -295,26 +387,49 @@ function alienAction(gameState)
 	
 	if (randNum > 0.5)
 	{
+		sounds.play('slash');
 		damage = Math.floor(10*Math.random())+10;
 		newState.game.player.hp = newState.game.player.hp - damage;
 		
 		if (newState.game.player.hp <= 0)
 			nextStep = 'gameOver';
 	}
+	else
+		sounds.play('miss');
 	
 	return displayMessageScreen(newState.game, `ALIEN ATTACK\nHITS : ${damage}`, nextStep);
 }
 
-function alienDead(gameState) { return displayMessageScreen(gameState, ' \n \n ALIEN DEAD', 'displaySettingOnly'); }
-function gameOver(gameState) { return displayMessageScreen(gameState, ' \n \n GAME OVER', 'displayStartScreen'); }
-	
+function alienDead(gameState)
+{
+	sounds.play('dead-alien');
+	return displayMessageScreen(gameState, ' \n \n ALIEN DEAD', 'displaySettingOnly');
+}
+
+function gameOver(gameState)
+{
+	sounds.play('game-over');
+	return displayMessageScreen(gameState, ' \n \n GAME OVER', 'displayStartScreen');
+}
+
 // Sortir du vaisseau
 
-function escapeFromStarship1(gameState) { return displayMessageScreen(gameState, 'YOU LAUNCH\nINTO THE\nSTARS', 'escapeFromStarship2'); }
-function escapeFromStarship2(gameState) { return displayMessageScreen(gameState, 'LEAVING\nTHE HORROR\nBEHIND', 'escapeFromStarship3'); }
+function escapeFromStarship1(gameState)
+{
+	sounds.play('key-stroke');
+	return displayMessageScreen(gameState, 'YOU LAUNCH\nINTO THE\nSTARS', 'escapeFromStarship2');
+}
+
+function escapeFromStarship2(gameState)
+{
+	sounds.play('key-stroke');
+	return displayMessageScreen(gameState, 'LEAVING\nTHE HORROR\nBEHIND', 'escapeFromStarship3');
+}
 
 function escapeFromStarship3(gameState)
 {
+	sounds.play('key-stroke');
+	sounds.play('jet');
 	var newState = initNewState(gameState);
 	newState.graphics.end = 1.0;
 	newState.game.prgmCursor = 'displayStartScreen';
