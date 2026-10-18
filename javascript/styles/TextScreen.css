@@ -1,0 +1,36 @@
+#text-screen
+{
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	text-align: center;
+	white-space: nowrap;
+}
+
+#text-screen svg
+{
+	width: 612px;
+	height: 1202px;
+	max-width: 90%;
+	max-height: 90%;
+}
+
+#text-screen svg #html
+{
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	overflow: hidden;
+	white-space: normal;
+	text-align: left;
+}
+
+#text-screen .wall
+{
+	width: 0px;
+	height: 100%;
+}

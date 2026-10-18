@@ -1,0 +1,30 @@
+#calculator
+{
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	text-align: center;
+	white-space: nowrap;
+}
+
+#calculator svg
+{
+	width: 612px;
+	height: 1202px;
+	max-width: 90%;
+	max-height: 90%;
+}
+
+#calculator #screen-background
+{
+	fill: rgb(53, 67, 155);
+	fill-opacity: 0.15;
+}
+
+#calculator .wall
+{
+	width: 0px;
+	height: 100%;
+}

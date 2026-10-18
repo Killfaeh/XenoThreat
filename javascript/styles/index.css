@@ -1,0 +1,36 @@
+html, body
+{
+  height: 100%;
+  margin: 0px;
+}
+
+body
+{
+  font-family: Arial;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  background-color: #ecb892;
+  background-image: url(../assets/background.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+#root
+{
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+#root *
+{
+  display: inline-block;
+  vertical-align: middle;
+}

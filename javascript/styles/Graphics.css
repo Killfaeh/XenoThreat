@@ -1,0 +1,24 @@
+#graphics
+{
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	text-align: center;
+	white-space: nowrap;
+}
+
+#graphics svg
+{
+	width: 612px;
+	height: 1202px;
+	max-width: 90%;
+	max-height: 90%;
+}
+
+#graphics .wall
+{
+	width: 0px;
+	height: 100%;
+}

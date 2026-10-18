@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html>
+	<head id="head" >
+		<meta charset="utf-8" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, minimum-scale=1" />
+		<meta name="viewport" content="width=device-width, maximum-scale=1" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name=“viewport” content=”initial-scale=1, viewport-fit=cover”>
+		
+		<link type="text/css" rel="stylesheet" media="all" href="styles/index.css"></link>
+		<link type="text/css" rel="stylesheet" media="all" href="styles/App.css"></link>
+		<link type="text/css" rel="stylesheet" media="all" href="styles/Calculator.css"></link>
+		<link type="text/css" rel="stylesheet" media="all" href="styles/Graphics.css"></link>
+		<link type="text/css" rel="stylesheet" media="all" href="styles/TextScreen.css"></link>
+		<link type="text/css" rel="stylesheet" media="all" href="styles/Keyboard.css"></link>
+		<link type="text/css" rel="stylesheet" media="all" href="styles/Help.css"></link>
+
+		<title>Xeno Threat</title>
+	</head>
+
+	<body id="main" >
+		<div id="root" >
+
+			<!-- Arrière plan avec la calculatrice -->
+			<div id="calculator" >
+				<svg viewBox="0 0 612 1202" >
+					<image href="assets/calculator.png" x="0" y="0" width="612" height="1202" />
+					<rect id="screen-background" x="148.009" y="143" width="316" height="188" />
+				</svg>
+				<div class="wall" ></div>
+			</div>
+			
+			<!-- Graphismes affichés à l'écran -->
+			<div id="graphics" >
+				<svg viewBox="0 0 612 1202" >
+					<image id="img-corridor" href="assets/graphics/corridor.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-wall" href="assets/graphics/wall.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-door" href="assets/graphics/door.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-exit" href="assets/graphics/exit.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-left-corridor" href="assets/graphics/left-corridor.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-right-corridor" href="assets/graphics/right-corridor.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-left-wall" href="assets/graphics/left-wall.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-right-wall" href="assets/graphics/right-wall.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-corridor-canvas" href="assets/graphics/corridor-canvas.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-alien" href="assets/graphics/alien.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-bullets" href="assets/graphics/bullets.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-heal" href="assets/graphics/heal.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-key" href="assets/graphics/key.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-exe" href="assets/graphics/exe.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-north" href="assets/chars/N.png" x="152.009" y="299" width="24" height="32" style="opacity: 0.0;" />
+					<image id="img-east" href="assets/chars/E.png" x="152.009" y="299" width="24" height="32" style="opacity: 0.0;" />
+					<image id="img-south" href="assets/chars/S.png" x="152.009" y="299" width="24" height="32" style="opacity: 0.0;" />
+					<image id="img-west" href="assets/chars/W.png" x="152.009" y="299" width="24" height="32" style="opacity: 0.0;" />
+					<image id="img-map" href="assets/graphics/map.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-position" href="assets/graphics/position.png" x="0" y="0" width="20" height="20" style="opacity: 0.0;" />
+					<image id="img-end" href="assets/graphics/end.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+					<image id="img-logo" href="assets/graphics/logo.png" x="148.009" y="143" width="316" height="188" style="opacity: 0.0;" />
+				</svg>
+				<div class="wall" ></div>
+			</div>
+			
+			<!-- Écran texte -->
+			<div id="text-screen" >
+				<svg viewBox="0 0 612 1202" >
+					<foreignObject x="148.009" y="143" width="316" height="188" >
+						<div id="html" >
+							<span id="text" ></span>
+							<br />
+							<span id="input" ></span>
+						</div>
+					</foreignObject>
+				</svg>
+				<div class="wall" ></div>
+			</div>
+			
+			<!-- Clavier de la calculette -->
+			<div id="keyboard" >
+				<svg viewBox="0 0 612 1202" >
+					<rect id="key-0" x="67.468" y="1035.1" width="80.611" height="55.44" />
+					<rect id="key-1" x="67.628" y="952.792" width="80.611" height="55.44" />
+					<rect id="key-2" x="166.804" y="951.792" width="80.611" height="55.44" />
+					<rect id="key-3" x="266.005" y="951.792" width="80.611" height="55.44" />
+					<rect id="key-4" x="67.904" y="870.933" width="80.611" height="55.44" />
+					<rect id="key-5" x="167.017" y="870.933" width="80.611" height="55.44" />
+					<rect id="key-6" x="266.237" y="870.933" width="80.611" height="55.44" />
+					<rect id="key-7" x="69.447" y="789.776" width="80.611" height="55.44" />
+					<rect id="key-8" x="167.823" y="788.776" width="80.611" height="55.44" />
+					<rect id="key-9" x="265.852" y="788.776" width="80.611" height="55.44" />
+					<rect id="key-quit" x="313.469" y="569.462" width="63.936" height="41.109" />
+					<rect id="key-ac" x="461.675" y="788.776" width="80.611" height="55.44" />
+					<rect id="key-exe" x="464.014" y="1033.57" width="80.611" height="55.44" />
+					<rect id="key-menu" x="313.469" y="496.645" width="63.936" height="41.109" />
+				</svg>
+				<div class="wall" ></div>
+			</div>
+			
+			<!-- Panneau d'aide des commandes du jeu -->
+			<div id="help" style="display: none; " >
+				<div id="help-content" >
+					<table>
+						<tbody>
+							<tr><td class="action" >Turn on</td><td><span class="calculator-key light" >AC<sup>/on</sup></span></td><td><span class="computer-key" >Enter</span></td></tr>
+							<tr><td class="action" >Enter</td><td><span class="calculator-key blue" >EXE</span></td><td><span class="computer-key" >Enter</span></td></tr>
+							<tr><td class="action" >Quit game</td><td><span class="calculator-key black" >QUIT</span></td><td><span class="computer-key" >Escape</span></td></tr>
+						
+							<tr><th colspan="3" class="table-head" >Exploration</th></tr>
+							<tr><td class="action" >Go foward</td><td><span class="calculator-key gray" >8</span></td><td><span class="computer-key" >8</span></td></tr>
+							<tr><td class="action" >Turn left</td><td><span class="calculator-key gray" >7</span></td><td><span class="computer-key" >7</span></td></tr>
+							<tr><td class="action" >Turn right</td><td><span class="calculator-key gray" >9</span></td><td><span class="computer-key" >9</span></td></tr>
+							<tr><td class="action" >Map</td><td><span class="calculator-key gray" >5</span></td><td><span class="computer-key" >5</span></td></tr>
+							<tr><td class="action" >Stat</td><td><span class="calculator-key gray" >2</span></td><td><span class="computer-key" >2</span></td></tr>
+							<tr><td class="action" >Help</td><td><span class="calculator-key gray" >6</span></td><td><span class="computer-key" >6</span></td></tr>
+							<tr><td class="action" >Load game</td><td><span class="calculator-key gray" >1</span></td><td><span class="computer-key" >1</span></td></tr>
+							<tr><td class="action" >Save game</td><td><span class="calculator-key gray" >3</span></td><td><span class="computer-key" >3</span></td></tr>
+							
+							<tr><th colspan="3" class="table-head" >Fight</th></tr>
+							<tr><td class="action" >Hand attack</td><td><span class="calculator-key gray" >1</span></td><td><span class="computer-key" >1</span></td></tr>
+							<tr><td class="action" >Gun attack</td><td><span class="calculator-key gray" >2</span></td><td><span class="computer-key" >2</span></td></tr>
+							<tr><td class="action" >Escape</td><td><span class="calculator-key gray" >3</span></td><td><span class="computer-key" >3</span></td></tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="wall" ></div>
+				<img id="img-close" src="assets/graphics/close.png" />
+			</div>
+			<img id="img-help" src="assets/graphics/help.png" />
+		
+		</div>
+		
+		<script type="text/javascript" src="utils/utils.js" ></script>
+		<script type="text/javascript" src="utils/gameData.js" ></script>
+		<script type="text/javascript" src="utils/gameDataMapping.js" ></script>
+		<script type="text/javascript" src="utils/gameInitStates.js" ></script>
+		<script type="text/javascript" src="utils/gameFunctions.js" ></script>
+		<script type="text/javascript" src="utils/gameEngine.js" ></script>
+		<script type="text/javascript" src="index.js" ></script>
+	</body>
+</html>
