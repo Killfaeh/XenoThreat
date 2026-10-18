@@ -395,6 +395,7 @@ subPrgm.set('displayNewGame4', displayNewGame4);
 subPrgm.set('displayNewGame5', displayNewGame5);
 subPrgm.set('displayNewGame6', displayNewGame6);
 subPrgm.set('displayNewGame7', displayNewGame7);
+subPrgm.set('displayNewGame8', displayNewGame8);
 subPrgm.set('displayLoadPrompt', displayLoadPrompt);
 subPrgm.set('displaySavePrompt', displaySavePrompt);
 subPrgm.set('execSave', execSave);
