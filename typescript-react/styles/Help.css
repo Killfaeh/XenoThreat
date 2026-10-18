@@ -1,0 +1,135 @@
+#help
+{
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	text-align: center;
+	-webkit-backdrop-filter: blur(5px);
+	backdrop-filter: blur(5px);
+}
+
+#help #help-content, #help .wall
+{
+	display: inline-block;
+	vertical-align: middle;
+}
+
+#help .wall
+{
+	height: 100%;
+}
+
+#help #help-content
+{
+	color: rgb(255, 255, 255);
+	background-color: rgba(0, 0, 0, 0.75);
+	padding: 20px;
+	border-radius: 20px;
+	-webkit-text-shadow: 2px 2px 2px rgb(0, 0, 0);
+	text-shadow: 2px 2px 2px rgb(0, 0, 0);
+	border: solid 4px rgb(255, 255, 255);
+	box-shadow: 0px 5px 7px rgba(0, 0, 0, 0.5);
+	max-height: calc(95% - 40px);
+	overflow: auto;
+}
+
+#help #help-content table
+{
+	border-collapse: collapse;
+}
+
+#help #help-content tbody
+{
+	display: table-row-group;
+}
+
+#help #help-content tr
+{
+	display: table-row;
+	border-bottom: dotted 1px rgb(150, 150, 150);
+}
+
+#help #help-content th, #help #help-content td
+{
+	display: table-cell;
+	padding: 5px;
+	/* border-bottom: dotted 1px rgb(150, 150, 150); */
+}
+
+#help #help-content td
+{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+#help #help-content .action
+{
+	text-align: left;
+	padding-left: 10px;
+	padding-right: 25px;
+}
+
+#help #help-content th
+{
+	padding-top: 0px;
+}
+
+#help #help-content .table-head
+{
+	padding-top: 20px;
+}
+
+#help #help-content .calculator-key,
+#help #help-content .computer-key
+{
+	display: inline-block;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	width: 47px;
+	text-align: center;
+	border-radius: 5px;
+	font-size: 0.85em;
+}
+
+#help #help-content .computer-key
+{
+	background-color: rgb(240, 230, 220);
+	border-bottom: solid 4px rgb(180, 170, 150);
+	color: rgb(0, 0, 0);
+	-webkit-text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+	text-shadow: 0px 0px 0px rgba(0, 0, 0, 0);
+}
+
+#help #help-content .calculator-key
+{
+	background-color: rgb(110, 110, 110);
+	border-bottom: solid 4px rgb(65, 65, 65);
+}
+
+#help #help-content .light
+{
+	background-color: rgb(195, 195, 195);
+	border-bottom: solid 4px rgb(128, 128, 128);
+}
+
+#help #help-content .black
+{
+	background-color: rgb(80, 80, 80);
+	border-bottom: solid 4px rgb(0, 0, 0);
+}
+
+#help #help-content .blue
+{
+	background-color: rgb(117, 152, 197);
+	border-bottom: solid 4px rgb(50, 90, 110);
+}
+
+#img-close
+{
+	position: absolute;
+	right: 3px;
+	top: 5px;
+	cursor: pointer;
+}
