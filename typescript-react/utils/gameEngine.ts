@@ -405,6 +405,7 @@ subPrgm.set('displaySettingOnly', displaySettingOnly);
 subPrgm.set('displayActionPrompt', displayActionPrompt);
 subPrgm.set('execAction', execAction);
 subPrgm.set('displayHelp', displayHelp);
+subPrgm.set('displayHelp2', displayHelp2);
 subPrgm.set('displayPlayerStat2', displayPlayerStat2);
 subPrgm.set('displayPlayerStat3', displayPlayerStat3);
 subPrgm.set('startFight', startFight);
