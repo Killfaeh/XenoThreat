@@ -14,6 +14,7 @@ export const initialStage: GameMap = map[map.length-1];
 export const INITIAL_GAME_STATE:GameState = {
 	started: false,
 	prgmCursor: 'displayStartMenu',
+	soundToPlay: '',
 	textAnimation: false,
 	waitInput: false,
 	input: -1,

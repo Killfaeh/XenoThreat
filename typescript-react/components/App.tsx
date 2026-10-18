@@ -7,6 +7,7 @@ import type { GameEventMap } from '../utils/types';
 import { eventMap, reset, execGameLoop } from '../utils/utils';
 import { INITIAL_STATE } from '../utils/gameInitStates';
 import { gameLoaded } from '../utils/gameEngine';
+import { sounds } from '../utils/soundManager';
 
 import Calculator from './Calculator'
 import Graphics from './Graphics'
@@ -43,6 +44,7 @@ function App() {
 	const handleInput = (input: number): void => {
 
 		if (state.game.started && !state.game.textAnimation && state.game.waitInput) {
+			sounds.play('key-stroke');
 			const newState = {...state};
 			newState.game.input = input;
 			setState(() => newState);

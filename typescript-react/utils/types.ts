@@ -59,6 +59,7 @@ export type PrgmCursor = 0 | 1 | 2 | 3;
 export interface GameState {
 	started: boolean;
 	prgmCursor: string;
+	soundToPlay: string;
 	textAnimation: boolean;
 	waitInput: boolean;
 	input: number;

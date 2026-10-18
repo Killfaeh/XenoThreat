@@ -7,6 +7,7 @@ import { spreadOut, initNewState, stringToImages, animeText } from './utils';
 import { tileMapping1, tileMapping2 } from './gameDataMapping';
 import { map } from './gameData';
 import { INITIAL_GRAPHICS_STATE } from './gameInitStates';
+import { sounds } from './soundManager'; // Chargement du gestionnaire de sons
 
 //// Fonctions utiles spécifiques à Xeno Threat ////
 
@@ -200,12 +201,15 @@ export function displayTile(state: State): State {
 	
 	// Checker si un alien est là ou non...
 	if (tileData.item > 4) {
+		sounds.play('alien');
 		state.graphics.alien = 1.0;
 		state.graphics.exe = 1.0;
 		state.game.alienHP = tileData.item-4;
 		state.game.prgmCursor = 'startFight';
 	
 	} else {
+	
+		state.game.soundToPlay = 'key-stroke';
 	
 		// Afficher la case
 		state.graphics = displayBackground(state.game);
@@ -220,6 +224,7 @@ export function displayTile(state: State): State {
 			if (tileData.item === 1) {
 				state.game.player.keys++;
 				emptyTile(state.game.player, tileData);
+				state.game.soundToPlay = 'key';
 				
 			// 2 : Un lot de 10 munitions
 			} else if (tileData.item === 2) {
@@ -230,6 +235,8 @@ export function displayTile(state: State): State {
 				}
 				
 				emptyTile(state.game.player, tileData);
+				
+				state.game.soundToPlay = 'bullets';
 			
 			// 3 : Une trousse de secours rapportant maximum 30 points de vie
 			} else if (tileData.item === 3 && state.game.player.hp < 99) {
@@ -240,6 +247,8 @@ export function displayTile(state: State): State {
 				}
 				
 				emptyTile(state.game.player, tileData);
+				
+				state.game.soundToPlay = 'health';
 			}
 			
 			state.game.prgmCursor = 'displaySettingOnly';
@@ -268,8 +277,15 @@ export function attackAlien(gameState: GameState, damageScale: number): State {
 			nextStep = 'alienDead';
 		}
 		
+		if (damageScale > 5) {
+			sounds.play('gun');
+		} else {
+			sounds.play('punch');
+		}
+		
 		return displayMessageScreen(gameState, `YOUR ATTACK\nSUCCEDED\nHITS : ${damage}`, nextStep);
 	} else {
+		sounds.play('miss');
 		return displayMessageScreen(gameState, 'YOUR ATTACK\nFAILED', 'alienAction');
 	}
 }

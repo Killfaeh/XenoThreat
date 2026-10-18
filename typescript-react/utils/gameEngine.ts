@@ -6,6 +6,7 @@
 
 import type { GameState, State, AllSaveStates, Tile } from './types'; // Chargement des types
 import { subPrgm, initNewState } from './utils'; // Chargement du moteur généraliste
+import { sounds } from './soundManager'; // Chargement du gestionnaire de sons
 
 // Définition des données spécifiques du jeu
 import { INITIAL_GAME_STATE } from './gameInitStates';
@@ -14,6 +15,8 @@ import { displayMessageScreen, displaySaveStates, initMap, getTileData, setTileD
 //// Pile de sous programmes ////
 
 function displayStartScreen(): State {
+	sounds.stopAll();
+	sounds.loadAll();
 	const newState: State = initNewState(INITIAL_GAME_STATE);
 	newState.game.started = true;
 	newState.graphics.logo = 1.0;
@@ -21,6 +24,7 @@ function displayStartScreen(): State {
 }
 
 function displayStartMenu(gameState: GameState): State {
+	sounds.play('open-menu');
 	return displayMessageScreen(gameState, 'MAIN MENU\n0:NEW GAME\n1:LOAD GAME\nWHAT TO DO@', 'selectStartMenu');
 }
 
@@ -29,8 +33,10 @@ function selectStartMenu(gameState: GameState): State {
 	const newState: State = initNewState(gameState);
 	
 	if (newState.game.input === 0) {
+		sounds.play('key-stroke');
 		return displayMessageScreen(gameState, 'COMMANDS\n8:GO AHEAD\n7:TURN LEFT\n9:TURN RIGHT', 'displayNewGame1');
 	} else if (newState.game.input === 1) {
+		sounds.play('open-menu');
 		return displayMessageScreen(gameState, displaySaveStates(), 'displayLoadPrompt');
 	} else {
 		return displayStartMenu(gameState);
@@ -40,34 +46,44 @@ function selectStartMenu(gameState: GameState): State {
 }
 
 function displayNewGame1(gameState: GameState): State {
+	sounds.play('key-stroke');
 	return displayMessageScreen(gameState, '5:VIEW MAP\n2:VIEW STATS\n1:LOAD GAME\n3:SAVE GAME', 'displayNewGame2');
 }
 
 function displayNewGame2(gameState: GameState): State {
+	sounds.play('key-stroke');
 	return displayMessageScreen(gameState, '6:VIEW CMDS', 'displayNewGame3');
 }
 
 function displayNewGame3(gameState: GameState): State {
+	sounds.stop('space-mood');
+	sounds.play('key-stroke');
 	return displayMessageScreen(gameState, '...', 'displayNewGame4');
 }
 
 function displayNewGame4(gameState: GameState): State {
+	sounds.play('red_alert');
+	sounds.play('ship-mood-2', true);
 	return displayMessageScreen(gameState, 'RED ALERT\nRED ALERT', 'displayNewGame5');
 }
 
 function displayNewGame5(gameState: GameState): State {
+	sounds.play('key-stroke');
 	return displayMessageScreen(gameState, 'HOSTILE\nALIENS HAVE\nINVADED\nTHE DEDALUS', 'displayNewGame6');
 }
 
 function displayNewGame6(gameState: GameState): State {
+	sounds.play('key-stroke');
 	return displayMessageScreen(gameState, 'YOU MUST\nEVACUATE\nTHE SHIP', 'displayNewGame7');
 }
 
 function displayNewGame7(gameState: GameState): State {
+	sounds.play('key-stroke');
 	return displayMessageScreen(gameState, 'REPEAT', 'displayNewGame8');
 }
 
 function displayNewGame8(gameState: GameState): State {
+	sounds.play('key-stroke');
 	return displayMessageScreen(gameState, 'YOU MUST\nEVACUATE\nTHE SHIP', 'startGame');
 }
 
@@ -83,8 +99,7 @@ function execSave(gameState: GameState): State {
 	let newState: State = initNewState(gameState);
 	
 	if (newState.game.input > 0 && newState.game.input < 9) {
-		// Charger la partie
-		// A faire...
+		sounds.play('save');
 		const saved: string | null = localStorage.getItem('xeno-threat');
 		const savedState: AllSaveStates = saved ? JSON.parse(saved) : { '1': null, '2': null, '3': null, '4': null, '5': null, '6': null, '7': null, '8': null, '9': null };
 		const slot = newState.game.input.toString() as keyof AllSaveStates;
@@ -99,6 +114,11 @@ function execSave(gameState: GameState): State {
 }
 
 function startGame(gameState: GameState): State {
+
+	sounds.stop('space-mood');
+	sounds.play('load');
+	sounds.play('ship-mood-2', true);
+
 	let newState: State = initNewState(gameState);
 	
 	newState.game.player = {...INITIAL_GAME_STATE.player};
@@ -123,19 +143,23 @@ function startGame(gameState: GameState): State {
 }
 
 function displayCurrentTile(gameState: GameState): State {
+	sounds.play('key-stroke');
 	let newState: State = initNewState(gameState);
 	newState = displayTile(newState);
 	return newState;
 }
 
 function displaySettingOnly(gameState: GameState): State {
+	//sounds.play('key-stroke');
 	const newState: State = initNewState(gameState);
 	newState.game.prgmCursor = 'displayActionPrompt';
+	newState.game.soundToPlay = 'key-stroke';
 	newState.graphics = displayBackground(newState.game);
 	return newState;
 }
 
 function displayActionPrompt(gameState: GameState): State {
+	sounds.play('key-stroke');
 	return displayMessageScreen(gameState, 'WHAT TO DO@', 'execAction');
 }
 
@@ -176,6 +200,9 @@ function execAction(gameState: GameState): State {
 			
 			// Sortir
 			if (tileData.item === 4 && newState.game.player.orientation === 1) {
+				sounds.stop('ship-mood-2');
+				sounds.play('door');
+				sounds.play('space-mood', true);
 				return displayMessageScreen(newState.game, 'YOU ESCAPED\nFROM THE\nDEDALUS', 'escapeFromStarship1');
 			}
 			
@@ -212,6 +239,7 @@ function execAction(gameState: GameState): State {
 						
 						// Si nécessaire on passe à la section suivante
 						if (nextId > newState.game.player.tileId) {
+							sounds.play('door');
 							newState.game.player.sectionId--;
 							newState.game.player.currentStage = initMap(newState.game.player);
 						}
@@ -220,6 +248,7 @@ function execAction(gameState: GameState): State {
 					// Cas du retour à la section précédente
 					if (newState.game.player.orientation === 3) {
 						if (nextId < newState.game.player.tileId) {
+							sounds.play('door');
 							newState.game.player.sectionId++;
 							newState.game.player.currentStage = initMap(newState.game.player);
 						}
@@ -232,11 +261,13 @@ function execAction(gameState: GameState): State {
 			}
 		}
 
+		sounds.play('key-stroke');
 		newState = displayTile(newState);
 	
 	// Affichage de la map
 	} else if (newState.game.input === 5) {
 	
+		sounds.play('open-menu');
 		const tileData: Tile = getTileData(newState.game.player);
 		newState.graphics.map = 1.0;
 		newState.graphics.position = 1.0;
@@ -248,22 +279,27 @@ function execAction(gameState: GameState): State {
 	
 	// Affichage des statistiques du joueur
 	} else if (newState.game.input === 2) {
+		sounds.play('open-menu');
 		newState = displayMessageScreen(newState.game, `STATS\nHEALTH: ${newState.game.player.hp}`, 'displayPlayerStat2');
 	
 	// Affichage de l'écran de chargement d'une partie
 	} else if (newState.game.input === 1) {
+		sounds.play('open-menu');
 		newState = displayMessageScreen(newState.game, displaySaveStates(), 'displayLoadPrompt');
 	
 	// Affichage de l'écran de sauvegarde de la partie
 	} else if (newState.game.input === 3) {
+		sounds.play('open-menu');
 		newState = displayMessageScreen(newState.game, displaySaveStates(), 'displaySavePrompt');
 	
 	// Afficher les commandes du jeu
 	} else if (newState.game.input === 6) {
+		sounds.play('open-menu');
 		return displayMessageScreen(gameState, 'COMMANDS\n8:GO AHEAD\n7:TURN LEFT\n9:TURN RIGHT', 'displayHelp');
 	
 	// Affichage du décor de la case actuelle
 	} else {
+		sounds.play('key-stroke');
 		newState.graphics = displayBackground(newState.game);
 	}
 	
@@ -294,6 +330,8 @@ function startFight(gameState: GameState): State {
 
 function displayFightMenu(gameState: GameState): State {
 	
+	sounds.play('open-menu');
+	
 	let message = '1:HAND ATK\n';
 	
 	if (gameState.player.bullets > 0) {
@@ -322,6 +360,8 @@ function execFightAction(gameState: GameState): State {
 			
 			const randNum: number = Math.random();
 			
+			sounds.play('escape');
+			
 			if (randNum > 0.5) {
 				const tileData: Tile = getTileData(newState.game.player);
 				tileData.item = newState.game.alienHP + 4;
@@ -347,36 +387,45 @@ function alienAction(gameState: GameState): State {
 	let damage: number = 0;
 	
 	if (randNum > 0.5) {
+		sounds.play('slash');
 		damage = Math.floor(10*Math.random())+10;
 		newState.game.player.hp = newState.game.player.hp - damage;
 		
 		if (newState.game.player.hp <= 0) {
 			nextStep = 'gameOver';
 		}
+	} else {
+		sounds.play('miss');
 	}
 	
 	return displayMessageScreen(newState.game, `ALIEN ATTACK\nHITS : ${damage}`, nextStep);
 }
 
 function alienDead(gameState: GameState): State {
+	sounds.play('dead-alien');
 	return displayMessageScreen(gameState, ' \n \n ALIEN DEAD', 'displaySettingOnly');
 }
 
 function gameOver(gameState: GameState): State {
+	sounds.play('game-over');
 	return displayMessageScreen(gameState, ' \n \n GAME OVER', 'displayStartScreen');
 }
 	
 // Sortir du vaisseau
 
 function escapeFromStarship1(gameState: GameState): State {
+	sounds.play('key-stroke');
 	return displayMessageScreen(gameState, 'YOU LAUNCH\nINTO THE\nSTARS', 'escapeFromStarship2');
 }
 
 function escapeFromStarship2(gameState: GameState): State {
+	sounds.play('key-stroke');
 	return displayMessageScreen(gameState, 'LEAVING\nTHE HORROR\nBEHIND', 'escapeFromStarship3');
 }
 
 function escapeFromStarship3(gameState: GameState): State {
+	sounds.play('key-stroke');
+	sounds.play('jet');
 	const newState: State = initNewState(gameState);
 	newState.graphics.end = 1.0;
 	newState.game.prgmCursor = 'displayStartScreen';

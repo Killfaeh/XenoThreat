@@ -3,6 +3,7 @@
 ////////////////////////////////
 
 import type { DataMapping, GameState, GraphicsState, State, GameEventMap } from './types';
+import { sounds } from './soundManager'; // Chargement du gestionnaire de sons
 
 export const customFunctionMap = new Map();
 
@@ -118,6 +119,7 @@ export function execGameLoop(gameState: GameState): State {
 	oldGameState.waitInput = false;
 	
 	if (subPrgm.has(oldGameState.prgmCursor)) {
+		sounds.play(oldGameState.soundToPlay);
 		const newState = subPrgm.get(oldGameState.prgmCursor)(oldGameState);
 		newState.game.input = -1;
 		return newState;
