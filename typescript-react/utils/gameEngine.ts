@@ -276,6 +276,16 @@ function execAction(gameState: GameState): State {
 		newState.graphics.posX = 136.009 + tileData.x*4;
 		newState.graphics.posY = 135 + 188 - tileData.y*4;
 		newState.game.prgmCursor = 'displayCurrentTile';
+		
+		if (newState.game.player.orientation === 1) {
+			newState.graphics.north = 1.0;
+		} else if (newState.game.player.orientation === 2) {
+			newState.graphics.east = 1.0;
+		} else if (newState.game.player.orientation === 3) {
+			newState.graphics.south = 1.0;
+		} else if (newState.game.player.orientation === 4) {
+			newState.graphics.west = 1.0;
+		}
 	
 	// Affichage des statistiques du joueur
 	} else if (newState.game.input === 2) {
