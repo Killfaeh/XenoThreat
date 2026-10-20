@@ -47,6 +47,7 @@ If V=1
 		
 		ClrText
 		3->V
+		1->L
 IfEnd
 
 'Ecran de chargement d'une partie enregistrée'
@@ -55,6 +56,7 @@ If V=2
 		"TO LOAD"?->A
 		Prog "LOADDATA"
 		3->V
+		1->L
 IfEnd
 
 0->M
@@ -63,6 +65,10 @@ IfEnd
 Lbl 1:If V=3
 	Then Prog "BUILDCOR"Disps
 		Prog "CLEAR"
+	
+		If L<>1
+			Then Goto 0
+		IfEnd
 
 		If Q>0
 			Then If Q<>4
@@ -171,3 +177,5 @@ IfEnd
 If V=13
 	Then Prog "DISPCTRL"
 IfEnd
+
+Lbl 0:B+0

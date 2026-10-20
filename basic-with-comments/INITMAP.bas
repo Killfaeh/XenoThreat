@@ -58,13 +58,15 @@ If W>1
 		List 5[11->Q 'On récupère le numéro d'item présent sur la case'
 		List 5[10->R 'On récupère le nombre de clé requis s'il s'agit d'une porte vers une autre section'
 
-		'Si la case de contient aucun item ni aucune porte verrouillée, on peut y positionner l'alien, sinon on recommence'
-		If Q=0
-			Then If R=0
-				Then Prog "EMPTY" 'Réinitialisation de la case'
-					94+List 4[D->List 4[D 'On insère le nombre de points de vie de l'alien dans le slot de l'item'
-					0->I 'On stoppe la boucle'
+		'Si la case de contient pas le joueur, aucun item ni aucune porte verrouillée, on peut y positionner l'alien, sinon on recommence'
+		If D<>C
+			Then If Q=0
+				Then If R=0
+					Then Prog "EMPTY" 'Réinitialisation de la case'
+						94+List 4[D->List 4[D 'On insère le nombre de points de vie de l'alien dans le slot de l'item'
+						0->I 'On stoppe la boucle'
 				IfEnd
+			IfEnd
 		IfEnd
 
 	LpWhile I>0

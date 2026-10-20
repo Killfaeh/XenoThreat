@@ -140,6 +140,14 @@ Prog "ORIENT"
 'Déclenchement du sous programme du mode combat.'
 Lbl 0:If Q>4
 	Then Prog "FIGHT"
-		5->Q
 		3->V
+		
+		'Si le joueur à 0 points de vie ou moins on sort de la boucle de jeu'
+		List 5[4->Q
+		
+		If Q<0
+			Then 0->L
+		IfEnd
+		
+		5->Q
 IfEnd
