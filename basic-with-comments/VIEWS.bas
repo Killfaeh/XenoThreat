@@ -68,6 +68,8 @@ Lbl 1:If V=3
 			Then If Q<>4
 				Then 1->M
 					Goto 1
+				Else "WHAT TO DO"?->A
+					Prog "EXECMOVE"
 			IfEnd
 			Else "WHAT TO DO"?->A
 				Prog "EXECMOVE"
