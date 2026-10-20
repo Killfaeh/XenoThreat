@@ -12,10 +12,10 @@ import bulletsImg from '../assets/graphics/bullets.png'
 import healImg from '../assets/graphics/heal.png'
 import keyImg from '../assets/graphics/key.png'
 import exeImg from '../assets/graphics/exe.png'
-import northImg from '../assets/chars/N.png'
-import eastImg from '../assets/chars/E.png'
-import southImg from '../assets/chars/S.png'
-import westImg from '../assets/chars/W.png'
+import northImg from '../assets/graphics/north.png'
+import eastImg from '../assets/graphics/east.png'
+import southImg from '../assets/graphics/south.png'
+import westImg from '../assets/graphics/west.png'
 import mapImg from '../assets/graphics/map.png'
 import positionImg from '../assets/graphics/position.png'
 import endImg from '../assets/graphics/end.png'
@@ -43,10 +43,10 @@ function Graphics({ display }: { display: GraphicsState }) {
 					<image id="img-heal" href={healImg} x="148.009" y="143" width="316" height="188" style={{opacity: display.heal}} />
 					<image id="img-key" href={keyImg} x="148.009" y="143" width="316" height="188" style={{opacity: display.key}} />
 					<image id="img-exe" href={exeImg} x="148.009" y="143" width="316" height="188" style={{opacity: display.exe}} />
-					<image id="img-north" href={northImg} x="152.009" y="299" width="24" height="32" style={{opacity: display.north}} />
-					<image id="img-east" href={eastImg} x="152.009" y="299" width="24" height="32" style={{opacity: display.east}} />
-					<image id="img-south" href={southImg} x="152.009" y="299" width="24" height="32" style={{opacity: display.south}} />
-					<image id="img-west" href={westImg} x="152.009" y="299" width="24" height="32" style={{opacity: display.west}} />
+					<image id="img-north" href={northImg} x="152.009" y="299" width="60" height="32" style={{opacity: display.north}} />
+					<image id="img-east" href={eastImg} x="152.009" y="299" width="60" height="32" style={{opacity: display.east}} />
+					<image id="img-south" href={southImg} x="152.009" y="299" width="60" height="32" style={{opacity: display.south}} />
+					<image id="img-west" href={westImg} x="152.009" y="299" width="60" height="32" style={{opacity: display.west}} />
 					<image id="img-map" href={mapImg} x="148.009" y="143" width="316" height="188" style={{opacity: display.map}} />
 					<image id="img-position" href={positionImg} x={display.posX} y={display.posY} width="20" height="20" style={{opacity: display.position}} />
 					<image id="img-end" href={endImg} x="148.009" y="143" width="316" height="188" style={{opacity: display.end}} />
