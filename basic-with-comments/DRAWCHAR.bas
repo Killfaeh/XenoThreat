@@ -34,7 +34,7 @@ If C=4
 IfEnd
 
 If C=5
-	Then {105,104,5,20->List 1
+	Then {105,104,5,204->List 1
 		{7,5,402,1->List 2
 		Prog "LINE"
 		{1,1->List 1
