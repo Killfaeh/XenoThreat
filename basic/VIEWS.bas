@@ -26,16 +26,21 @@ ClrText
 "EVACUATE"
 "THE SHIP"DispsClrText
 3->V
+1->L
 IfEnd
 If V=2
 Then Prog "LOADSCRN"
 "TO LOAD"?->A
 Prog "LOADDATA"
 3->V
+1->L
 IfEnd
 0->M
 Lbl 1:If V=3
 Then Prog "BUILDCOR"DispsProg "CLEAR"
+If L<>1
+Then Goto 0
+IfEnd
 If Q>0
 Then If Q<>4
 Then 1->M
@@ -106,3 +111,4 @@ IfEnd
 If V=13
 Then Prog "DISPCTRL"
 IfEnd
+Lbl 0:B+0

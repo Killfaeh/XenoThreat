@@ -38,11 +38,13 @@ D->List 5[1
 Prog "GETTILE"
 List 5[11->Q
 List 5[10->R
-If Q=0
+If D<>C
+Then If Q=0
 Then If R=0
 Then Prog "EMPTY"
 94+List 4[D->List 4[D
 0->I
+IfEnd
 IfEnd
 IfEnd
 LpWhile I>0

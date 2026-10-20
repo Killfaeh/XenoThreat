@@ -91,6 +91,10 @@ IfEnd
 Prog "ORIENT"
 Lbl 0:If Q>4
 Then Prog "FIGHT"
-5->Q
 3->V
+List 5[4->Q
+If Q<0
+Then 0->L
+IfEnd
+5->Q
 IfEnd

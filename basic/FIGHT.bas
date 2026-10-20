@@ -95,10 +95,11 @@ IfEnd
 Q+0DispsList 5[4->Q
 If Q<0
 Then 0->L
+0->F
 0->V
 6->V
 Prog "VIEWS"
 IfEnd
-Lbl 0:B+0
+Lbl 0:" "
 LpWhile F=1
 3->V
