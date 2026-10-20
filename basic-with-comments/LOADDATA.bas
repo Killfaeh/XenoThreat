@@ -17,7 +17,7 @@ If Q>0
 		Q-List 5[1](10)2-10*List 5[2->List 5[3 'Nombre de clé que possède le joueur'
 		Int (R(10)-3)->List 5[4 'Nombre de points de vie du joueur'
 		Int (.1R)-List 5[4](10)2->List 5[5 'Nombre de munitions que possède le joueur'
-		R->List 5[5](10)1-List 5[4](10)3->List 5[12 'Section de la map où se trouve le joueur'
+		R-List 5[5](10)1-List 5[4](10)3->List 5[12 'Section de la map où se trouve le joueur'
 		
 		'Initialisation de la section de map où se trouve le joueur'
 		List 5[12->W

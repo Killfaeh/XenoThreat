@@ -6,7 +6,7 @@
 Prog "CLEAR"
 
 'Initialisation de PV de l'alien'
-List Q[11]-4->H
+List 5[11]-4->H
 
 'Initialisation des variables d'affichage'
 0->O
