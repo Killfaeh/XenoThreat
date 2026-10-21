@@ -107,7 +107,7 @@ IfEnd
 If V=7
 	Then " "
 		" "
-		" ALIEN DEAD"Disps" "
+		" ALIEN DEAD"
 IfEnd
 
 'Ecran annonçant l'échec de l'attaque contre l'alien'
@@ -129,9 +129,7 @@ IfEnd
 'Ecran annonçant le succès de la fuite'
 If V=10
 	Then "YOUR ESCAPE"
-		"SUCCEDED"Disps
-
-		" "
+		"SUCCEDED"
 IfEnd
 
 'Séquence de fin de partie'

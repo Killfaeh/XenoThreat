@@ -86,6 +86,18 @@ If A=8
 
 					'On déplace le joueur sur la nouvelle case.'
 					X->List 5[1
+					
+					'Si le joueur n'a pas assez de clés on affiche un message'
+					Else If R=1
+						Then ClrText
+							"KEYS NEEDED"
+							"FOR THIS DOOR"
+							T+0Disps
+							ClrText
+							"YOU HAVE"
+							Y+0Disps
+						IfEnd
+					
 				IfEnd
 		IfEnd
 IfEnd
