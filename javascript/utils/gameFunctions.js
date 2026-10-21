@@ -60,7 +60,7 @@ function initMap(player)
 		player.tileId = randomTile;
 		var tileData = getTileData(player);
 		
-		if (tileData.item === 0 && tileData.locked === 0)
+		if (playerTile !== randomTile && tileData.item === 0 && tileData.locked === 0)
 		{
 			tileData.item = 94;
 			setTileData(player, tileData);
@@ -160,15 +160,20 @@ function displayBackground(gameState)
 	else
 		newState.leftWall = 1.0;
 	
-	if (player.orientation === 1 && tileData.locked > 0)
-	{
-		newState.door = 1.0;
-		newState.corridor = 0.0;
-		newState.wall = 0.0;
-	}
-	
 	if (player.orientation === 1)
+	{
 		newState.north = 1.0;
+		
+		if (tileData.locked > 0)
+		{
+			newState.door = 1.0;
+			newState.corridor = 0.0;
+			newState.wall = 0.0;
+		}
+		
+		if (tileData.item === 4)
+			newState.exit = 1.0;
+	}
 	else if (player.orientation === 2)
 		newState.east = 1.0;
 	else if (player.orientation === 3)
@@ -192,8 +197,8 @@ function displayItem(gameState, graphicsState)
 		graphicsState.bullets = 1.0;
 	else if (tileData.item === 3)
 		graphicsState.heal = 1.0;
-	else if (tileData.item === 4)
-		graphicsState.exit = 1.0;
+	// else if (tileData.item === 4 && player.orientation === 1)
+		// graphicsState.exit = 1.0;
 	
 	return graphicsState;
 }
