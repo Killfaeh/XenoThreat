@@ -257,6 +257,8 @@ function execAction(gameState)
 					newState.game.player.tileId = nextId;
 					//console.log("Player position : " + newState.game.player.tileId);
 				}
+				else if (newState.game.player.orientation === 1)
+					return displayMessageScreen(newState.game, 'KEYS NEEDED\nFOR THIS DOOR\n' + keysNeeded, 'displayPlayerKeys');
 			}
 		}
 
@@ -329,6 +331,7 @@ function displayHelp(gameState) { return displayMessageScreen(gameState, '5:VIEW
 function displayHelp2(gameState) { return displayMessageScreen(gameState, '6:VIEW CMDS', 'displaySettingOnly'); }
 function displayPlayerStat2(gameState) { return displayMessageScreen(gameState, `BULLETS: ${gameState.player.bullets}`, 'displayPlayerStat3'); }
 function displayPlayerStat3(gameState) { return displayMessageScreen(gameState, `KEYS: ${gameState.player.keys}`, 'displayCurrentTile'); }
+function displayPlayerKeys(gameState) { return displayMessageScreen(gameState, `YOU HAVE:\n${gameState.player.keys}`, 'displayCurrentTile'); }
 
 // Sous programmes des combats
 
@@ -470,6 +473,7 @@ subPrgm['displayHelp'] = displayHelp;
 subPrgm['displayHelp2'] = displayHelp2;
 subPrgm['displayPlayerStat2'] = displayPlayerStat2;
 subPrgm['displayPlayerStat3'] = displayPlayerStat3;
+subPrgm['displayPlayerKeys'] = displayPlayerKeys;
 subPrgm['startFight'] = startFight;
 subPrgm['displayFightMenu'] = displayFightMenu;
 subPrgm['execFightAction'] = execFightAction;
