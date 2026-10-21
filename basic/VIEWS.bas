@@ -70,7 +70,7 @@ IfEnd
 If V=7
 Then " "
 " "
-" ALIEN DEAD"Disps" "
+" ALIEN DEAD"
 IfEnd
 If V=8
 Then "YOUR ATTACK"
@@ -82,7 +82,7 @@ Then "YOUR ESCAPE"
 IfEnd
 If V=10
 Then "YOUR ESCAPE"
-"SUCCEDED"Disps" "
+"SUCCEDED"
 IfEnd
 If V=11
 Then "YOU ESCAPED"

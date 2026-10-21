@@ -51,6 +51,13 @@ W->List 5[12
 IfEnd
 IfEnd
 X->List 5[1
+Else If R=1
+Then ClrText
+"KEYS NEEDED"
+"FOR THIS DOOR"
+T+0DispsClrText
+"YOU HAVE"
+Y+0DispsIfEnd
 IfEnd
 IfEnd
 IfEnd
