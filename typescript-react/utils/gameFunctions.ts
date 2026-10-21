@@ -65,7 +65,7 @@ export function initMap(player: Player): GameMap {
 		player.tileId = randomTile;
 		const tileData: Tile = getTileData(player);
 		
-		if (tileData.item === 0 && tileData.locked === 0) {
+		if (playerTile !== randomTile && tileData.item === 0 && tileData.locked === 0) {
 			tileData.item = 94;
 			setTileData(player, tileData);
 			tryAgain = false;
@@ -149,14 +149,19 @@ export function displayBackground(gameState: GameState): GraphicsState {
 		newState.leftWall = 1.0;
 	}
 	
-	if (player.orientation === 1 && tileData.locked > 0) {
-		newState.door = 1.0;
-		newState.corridor = 0.0;
-		newState.wall = 0.0;
-	}
-	
 	if (player.orientation === 1) {
 		newState.north = 1.0;
+		
+		if (tileData.locked > 0) {
+			newState.door = 1.0;
+			newState.corridor = 0.0;
+			newState.wall = 0.0;
+		}
+		
+		if (tileData.item === 4) {
+			newState.exit = 1.0;
+		}
+			
 	} else if (player.orientation === 2) {
 		newState.east = 1.0;
 	} else if (player.orientation === 3) {
@@ -181,9 +186,10 @@ export function displayItem(gameState: GameState, graphicsState: GraphicsState):
 		graphicsState.bullets = 1.0;
 	} else if (tileData.item === 3) {
 		graphicsState.heal = 1.0;
-	} else if (tileData.item === 4) {
-		graphicsState.exit = 1.0;
 	}
+	// } else if (tileData.item === 4 && player.orientation === 1) {
+		// graphicsState.exit = 1.0;
+	// }
 	
 	return graphicsState;
 }
