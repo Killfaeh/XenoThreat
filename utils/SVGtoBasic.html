@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+	<head id="head" >
+		<meta charset="utf-8" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, minimum-scale=1" />
+		<meta name="viewport" content="width=device-width, maximum-scale=1" />
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name=“viewport” content=”initial-scale=1, viewport-fit=cover”>
+
+		<title>SVG to Basic</title>
+
+		<style>
+
+			body
+			{
+				position: absolute;
+				left: 0px;
+				right: 0px;
+				top: 0px;
+				bottom: 0px;
+				overflow: hidden;
+				font-family: Arial;
+			}
+			
+			h2
+			{
+				text-align: center;
+			}
+			
+			#SVG, #Basic
+			{
+				position: absolute;
+				top: 0px;
+				bottom: 25px;
+				overflow: hidden;
+			}
+			
+			#SVG
+			{
+				left: 0px;
+				right: 50%;
+			}
+			
+			#Basic
+			{
+				left: 50%;
+				right: 0px;
+			}
+			
+			#input, #output
+			{
+				position: absolute;
+				left: 10px;
+				right: 10px;
+				top: 80px;
+				bottom: 10px;
+				resize: none;
+			}
+			
+			#buttons
+			{
+				position: absolute;
+				left: 0px;
+				right: 0px;
+				bottom: 0px;
+				overflow: hidden;
+				text-align: center;
+			}
+
+		</style>
+		
+	</head>
+
+	<body id="main" >
+
+		<div id="SVG" >
+			<h2>SVG</h2>
+			<textarea id="input" ></textarea>
+		</div>
+		
+		<div id="Basic" >
+			<h2>Basic</h2>
+			<textarea id="output" ></textarea>
+		</div>
+		
+		<div id="buttons" >
+			<input id="convert" type="button" value="Convert" />
+			<input id="copy" type="button" value="Copy" />
+		</div>
+
+		<script type="text/javascript" >
+
+			//////////////////////
+			// Formats d'écrans //
+			//////////////////////
+			
+			const screen80x48 = 
+			{
+				height: 48,
+				yFactor: 100
+			};
+			
+			const screen128x64 = 
+			{
+				height: 64,
+				yFactor: 1000
+			};
+			
+			const screen396x224 = 
+			{
+				height: 224,
+				yFactor: 1000
+			};
+			
+			const screen = screen128x64;
+
+			///////////////////////////////////////////
+			// Conversion du SVG en code Basic CASIO //
+			///////////////////////////////////////////
+
+			document.getElementById('convert').onclick = function()
+			{
+				const svgData = document.getElementById('input').value;
+				
+				let doc = null;
+				
+				if (window.ActiveXObject)
+				{
+					doc = new ActiveXObject('Microsoft.XMLDOM');
+					doc.async = 'false';
+					doc.loadXML(svgData);
+				} 
+				else 
+				{
+					const parser = new DOMParser();
+					doc = parser.parseFromString(svgData, 'text/xml');
+				}
+					
+				let linesX = [];
+				let linesY = [];
+				let polylines = [];
+				let verticesX = [];
+				let verticesY = [];
+				
+				const pathNodes = doc.getElementsByTagName('path');
+				const circleNodes = doc.getElementsByTagName('circle');
+				
+				for (let i = 0; i < pathNodes.length; i++)
+				{
+					const d = pathNodes[i].getAttribute('d').replaceAll(' ', '');
+					
+					if (/^M[0-9.]+,[0-9.]+L[0-9.]+,[0-9.]+$/.test(d))
+					{
+						const matches = d.match(/^M([0-9.]+),([0-9.]+)L([0-9.]+),([0-9.]+)$/);
+						
+						const x1 = Math.floor(matches[1]);
+						//const y1 = screen.height - Math.floor(matches[2]);
+						const y1 = Math.floor(matches[2]);
+						const x2 = Math.floor(matches[3]);
+						//const y2 = screen.height - Math.floor(matches[4]);
+						const y2 = Math.floor(matches[4]);
+						
+						let xx = screen.yFactor*x1 + x2;
+						let yy = screen.yFactor*y1 + y2;
+						
+						if (x1 === x2)
+							xx = x1;
+						
+						if (y1 === y2)
+							yy = y1;
+						
+						linesX.push(xx);
+						linesY.push(yy);
+					}
+					else
+					{
+						let polylineX = [];
+						let polylineY = [];
+						
+						const vertices = d.split('L');
+						
+						for (j = 0; j < vertices.length; j++)
+						{
+							const coord = vertices[j].replace(/[A-Z]/ig, '').split(',');
+							const x = Math.floor(coord[0]);
+							const y = screen.height - Math.floor(coord[1]);
+							polylineX.push(x);
+							polylineY.push(y);
+						}
+						
+						const polyline = { x: polylineX, y: polylineY };
+						polylines.push(polyline);
+					}
+				}
+				
+				for (let i = 0; i < circleNodes.length; i++)
+				{
+					const circle = circleNodes[i];
+					const x = Math.floor(circle.getAttribute('cx'));
+					//const y = screen.height - Math.floor(circle.getAttribute('cy'));
+					const y = Math.floor(circle.getAttribute('cy'));
+					verticesX.push(x);
+					verticesY.push(y);
+				}
+				
+				let polylinesCode = '';
+				let linesXCode = '{';
+				let linesYCode = '{';
+				let verticesXCode = '{';
+				let verticesYCode = '{';
+				
+				for (let i = 0; i < polylines.length; i++)
+				{
+					let xCode = '{';
+					let yCode = '{';
+					
+					for (let j = 0; j < polylines[i]['x'].length; j++)
+					{
+						xCode = xCode + polylines[i]['x'][j] + ',';
+						yCode = yCode + polylines[i]['y'][j] + ',';
+					}
+					
+					xCode = xCode.replace(/,$/, '') + '->List 1';
+					yCode = yCode.replace(/,$/, '') + '->List 2';
+					
+					polylinesCode = polylinesCode + xCode + '\n' + yCode + '\nProg "POLY"\n';
+				}
+				
+				for (let i = 0; i < linesX.length; i++)
+				{
+					linesXCode = linesXCode + linesX[i] + ',';
+					linesYCode = linesYCode + linesY[i] + ',';
+				}
+				
+				linesXCode = linesXCode.replace(/,$/, '') + '->List 1';
+				linesYCode = linesYCode.replace(/,$/, '') + '->List 2';
+				
+				for (let i = 0; i < verticesX.length; i++)
+				{
+					verticesXCode = verticesXCode + verticesX[i] + ',';
+					verticesYCode = verticesYCode + verticesY[i] + ',';
+				}
+				
+				verticesXCode = verticesXCode.replace(/,$/, '') + '->List 1';
+				verticesYCode = verticesYCode.replace(/,$/, '') + '->List 2';
+				
+				let code = '';
+				
+				if (polylines.length > 0)
+					code = code + polylinesCode;
+				
+				if (linesX.length > 0 && linesY.length > 0)
+					code = code + '\n' + linesXCode + '\n' + linesYCode + '\nProg "LINE"';
+				
+				if (verticesX.length > 0 && verticesY.length > 0)
+					code = code + '\n' + verticesXCode + '\n' + verticesYCode + '\nDrawStat';
+				
+				document.getElementById('output').value = code;
+			};
+			
+			////////////////////////////////////////////////////
+			// Copier le code de sortie dans le presse papier //
+			////////////////////////////////////////////////////
+			
+			document.getElementById('copy').onclick = function()
+			{
+				const code = document.getElementById('output').value;
+				
+				if (!navigator.clipboard)
+				{
+					var textArea = document.createElement("textarea");
+					textArea.value = code;
+
+					textArea.style.top = "-1000000000px";
+					textArea.style.left = "-1000000000px";
+					textArea.style.width = "100px";
+					textArea.style.height = "100px";
+					textArea.style.position = "absolute";
+
+					document.body.appendChild(textArea);
+					textArea.focus();
+					textArea.select();
+
+					try
+					{
+						var successful = document.execCommand("copy");
+
+						if (successful)
+							alert("Code copied! ");
+						else
+							alert("Copy failed");
+					}
+					catch ($error) 
+					{
+						alert("Code copied! ");
+					} 
+
+					document.body.removeChild(textArea);
+				}
+				else
+				{
+					navigator.clipboard.writeText(code).then(function()
+					{
+						alert("Code copied! ");
+					}, 
+					function($error) 
+					{
+						alert("Copy failed");
+					});
+				}
+			};
+			
+			/////////////////////////////////////////////////////
+			// Chargement d'un fichier SVG par glisser déposer //
+			/////////////////////////////////////////////////////
+			
+			const accept = [];
+			let dropped = [];
+			let accepted = [];
+			let ready = [];
+
+			var onReady = function($callback)
+			{
+				if (ready.length >= accepted.length)
+					$callback(ready);
+			};
+
+			var loadFile = function($event, $callback)
+			{
+				if ($event.preventDefault)
+					$event.preventDefault();
+				// Cas Internet Explorer
+				else
+					$event.returnValue = false;
+
+				dropped = [];
+				accepted = [];
+				ready = [];
+
+				const effectAllowed = $event.dataTransfer.effectAllowed;
+
+				if (effectAllowed === "all")
+				{
+					dropped = $event.dataTransfer.files;
+
+					for (let i = 0; i < dropped.length; i++)
+					{
+						if (accept.length <= 0 || accept.indexOf(dropped[i].type) >= 0)
+							accepted.push(dropped[i]);
+					}
+
+					for (let i = 0; i < accepted.length; i++)
+					{
+						const file = accepted[i];
+
+						const reader = new FileReader();
+						reader.name = file.name;
+						reader.type = file.type;
+						reader.path = file.path;
+
+						reader.onload = function ($event)
+						{
+							const fileData = $event.target.result;
+							const fileName = this.name;
+							const fileType = this.type;
+							const filePath = this.path;
+
+							ready.push({ name: fileName, path: filePath, type: fileType, data: fileData });
+							onReady($callback);
+						};
+
+						reader.readAsDataURL(file);
+					}
+				}
+			};
+			
+			document.getElementById('main').ondrop = function($event)
+			{
+				dropped = [];
+				accepted = [];
+				ready = [];
+				
+				loadFile($event, function($files)
+				{
+					if ($files && $files.length > 0)
+					{
+						const data64 = $files[0].data.replace("data:image/svg+xml;base64,", '');
+						const data = atob(data64);
+						document.getElementById('input').value = data;
+					}
+				});
+			};
+
+
+		</script>
+		
+	</body>
+</html>
