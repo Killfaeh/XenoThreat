@@ -40,6 +40,6 @@ PlotOff 1,1Disps0->O
 0->P
 0->F
 0->L
-100->V
+0->V
 0->Q
 0->List 5[11
