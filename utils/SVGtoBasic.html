@@ -156,11 +156,11 @@
 						const matches = d.match(/^M([0-9.]+),([0-9.]+)L([0-9.]+),([0-9.]+)$/);
 						
 						const x1 = Math.floor(matches[1]);
-						//const y1 = screen.height - Math.floor(matches[2]);
-						const y1 = Math.floor(matches[2]);
+						const y1 = screen.height - Math.floor(matches[2]);
+						//const y1 = Math.floor(matches[2]);
 						const x2 = Math.floor(matches[3]);
-						//const y2 = screen.height - Math.floor(matches[4]);
-						const y2 = Math.floor(matches[4]);
+						const y2 = screen.height - Math.floor(matches[4]);
+						co//nst y2 = Math.floor(matches[4]);
 						
 						let xx = screen.yFactor*x1 + x2;
 						let yy = screen.yFactor*y1 + y2;
@@ -186,6 +186,7 @@
 							const coord = vertices[j].replace(/[A-Z]/ig, '').split(',');
 							const x = Math.floor(coord[0]);
 							const y = screen.height - Math.floor(coord[1]);
+							//const y = Math.floor(coord[1]);
 							polylineX.push(x);
 							polylineY.push(y);
 						}
@@ -199,8 +200,8 @@
 				{
 					const circle = circleNodes[i];
 					const x = Math.floor(circle.getAttribute('cx'));
-					//const y = screen.height - Math.floor(circle.getAttribute('cy'));
-					const y = Math.floor(circle.getAttribute('cy'));
+					const y = screen.height - Math.floor(circle.getAttribute('cy'));
+					//const y = Math.floor(circle.getAttribute('cy'));
 					verticesX.push(x);
 					verticesY.push(y);
 				}
